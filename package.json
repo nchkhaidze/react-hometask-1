@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint:fix": "eslint --fix --ext .js,.tsx",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx",
     "prepublish": "npm run lint:fix"
   },
   "eslintConfig": {

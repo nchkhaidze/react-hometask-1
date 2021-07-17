@@ -1,0 +1,20 @@
+.search {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.search__input-container {
+  -webkit-box-flex: 4;
+      -ms-flex-positive: 4;
+          flex-grow: 4;
+  margin-right: 10px;
+}
+
+.search__button-container {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+/*# sourceMappingURL=Search.css.map */

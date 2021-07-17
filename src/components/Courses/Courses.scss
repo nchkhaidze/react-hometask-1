@@ -1,0 +1,21 @@
+.courses {
+  display: flex;
+  border: 2px solid lightskyblue;
+  margin-top: 20px;
+  padding: 20px;
+  flex-direction: column;
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__course-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    margin-top: 20px;
+  }
+}
