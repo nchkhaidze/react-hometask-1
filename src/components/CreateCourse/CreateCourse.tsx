@@ -1,12 +1,23 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Button from '../Button/Button';
 import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParameters';
 import Input from '../Input/Input';
 import './CreateCourse.css';
+import { CourseAuthor } from '../../models/Author';
 
 const CreateCourse = () => {
-  const [descriptionFormValue, setDescriptionFormValue] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [courseAuthors, setCourseAuthors] = useState<CourseAuthor[]>([]);
+  const [authorName, setAuthorName] = useState('');
+  const [duration, setDuration] = useState(60);
+  useEffect(() => {
+    axios.get('http://localhost:5000/authors').then((response) => {
+      setCourseAuthors(response.data);
+    });
+  }, []);
 
   return (
     <div className='create'>
@@ -19,8 +30,8 @@ const CreateCourse = () => {
             <Input
               placeholder='Enter title'
               required={true}
-              value=''
-              setValue={() => {}}
+              value={title}
+              setValue={setTitle}
             />
           </div>
         </div>
@@ -35,14 +46,21 @@ const CreateCourse = () => {
         <div className='create__description-input'>
           <textarea
             className='create__textarea'
-            value={descriptionFormValue}
-            onChange={(event) => setDescriptionFormValue(event.target.value)}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
             minLength={2}
             required
           ></textarea>
         </div>
       </div>
-      <CreateCourseParameters></CreateCourseParameters>
+      <CreateCourseParameters
+        courseAuthors={courseAuthors}
+        setCourseAuthors={setCourseAuthors}
+        authorName={authorName}
+        setAuthorName={setAuthorName}
+        duration={duration}
+        setDuration={setDuration}
+      ></CreateCourseParameters>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import React from 'react';
 import Button from '../Button/Button';
 import './CourseCard.css';
-import * as durationPlugin from 'dayjs/plugin/duration';
 
 interface CourseCardProps {
   title: string;
@@ -11,8 +10,6 @@ interface CourseCardProps {
   description: string;
   authorNames: string[];
 }
-
-dayjs.extend(durationPlugin.default);
 
 const CourseCard = ({
   title,

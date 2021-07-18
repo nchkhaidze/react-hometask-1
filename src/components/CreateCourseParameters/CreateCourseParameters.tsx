@@ -3,27 +3,32 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import './CreateCourseParameters.css';
 import { useState } from 'react';
-import { Author } from '../../models/Author';
+import { Author, CourseAuthor } from '../../models/Author';
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import axios from 'axios';
+import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
 
-interface CourseAuthor extends Author {
-  onCourse: boolean;
+interface CreateCourseParametersProps {
+  courseAuthors: CourseAuthor[];
+  setCourseAuthors: (authors: CourseAuthor[]) => void;
+  authorName: string;
+  setAuthorName: (name: string) => void;
+  duration: number;
+  setDuration: (duration: number) => void;
 }
 
-const CreateCourseParameters = () => {
-  const [courseAuthors, setCourseAuthors] = useState<CourseAuthor[]>([]);
-  const [authorName, setAuthorName] = useState('');
-  useEffect(() => {
-    axios.get('http://localhost:5000/authors').then((response) => {
-      setCourseAuthors(response.data);
-    });
-  }, []);
-
+const CreateCourseParameters = ({
+  courseAuthors,
+  setCourseAuthors,
+  authorName,
+  setAuthorName,
+  duration,
+  setDuration,
+}: CreateCourseParametersProps) => {
   const addCourseAuthor = (author: Author) => {
     const authorToAdd = courseAuthors.find(
-      (courseAuthor) => author.id === courseAuthor.id
+      (courseAuthor: CourseAuthor) => author.id === courseAuthor.id
     );
     if (authorToAdd) {
       authorToAdd.onCourse = true;
@@ -42,6 +47,9 @@ const CreateCourseParameters = () => {
   };
 
   const createAuthor = async (name: string) => {
+    if (name.length < 2) {
+      return;
+    }
     const newAuthor: Author = { id: nanoid(), name };
     await axios.post('http://localhost:5000/authors', newAuthor);
     setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
@@ -78,6 +86,8 @@ const CreateCourseParameters = () => {
     })
     .filter((author) => author !== null);
 
+  console.log(duration);
+
   return (
     <div className='parameters'>
       <div className='parameters__left-block'>
@@ -92,7 +102,7 @@ const CreateCourseParameters = () => {
             value={authorName}
             setValue={setAuthorName}
           />
-          <small className='validation-warning' hidden={authorName.length > 2}>
+          <small className='validation-warning' hidden={authorName.length >= 2}>
             Name must be at least 2 chars
           </small>
           <div className='parameters__button-container'>
@@ -102,22 +112,7 @@ const CreateCourseParameters = () => {
             />
           </div>
         </div>
-        <div className='parameters__duration'>
-          <div className='parameters__add-duration'>
-            <div className='parameters__header'>Duration</div>
-            <div className='create__label'>
-              <label>Duration</label>
-            </div>
-            <Input
-              placeholder='Enter duration in minutes...'
-              value=''
-              setValue={() => {}}
-            />
-            <div className='parameters__total-duration'>
-              Duration: <b>00:00</b> hours
-            </div>
-          </div>
-        </div>
+        <CreateCourseDuration duration={duration} setDuration={setDuration} />
       </div>
       <div className='parameters__right-block'>
         <div className='parameters__header'>Authors</div>
