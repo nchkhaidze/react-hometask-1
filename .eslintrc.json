@@ -23,9 +23,9 @@
     "semi": true,
     "jsxSingleQuote": true,
     "singleQuote": true,
-    "useTabs": true,
+    "useTabs": false,
     "endOfLine": "auto",
-    "max-len": ["error", { "code": 80 }]
+    "max-len": ["error", { "code": 120 }]
     }
     ]
     }

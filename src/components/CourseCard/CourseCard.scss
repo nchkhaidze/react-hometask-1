@@ -6,13 +6,22 @@
   &__left-block {
     display: flex;
     flex-direction: column;
-    flex-grow: 3;
+    flex-grow: 1;
+    padding-right: 30px;
+    width: 80%;
   }
 
   &__right-block {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    height: 100%;
+    width: 20%;
+  }
+
+  &__description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   &__title {
@@ -22,5 +31,18 @@
   &__description-item {
     font-size: 14px;
     padding-bottom: 5px;
+  }
+
+  &__authors {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 }

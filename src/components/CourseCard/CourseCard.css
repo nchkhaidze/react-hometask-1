@@ -14,9 +14,11 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-flex: 3;
-      -ms-flex-positive: 3;
-          flex-grow: 3;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding-right: 30px;
+  width: 80%;
 }
 
 .course-card__right-block {
@@ -27,9 +29,14 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  height: 100%;
+  width: 20%;
+}
+
+.course-card__description {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .course-card__title {
@@ -39,5 +46,24 @@
 .course-card__description-item {
   font-size: 14px;
   padding-bottom: 5px;
+}
+
+.course-card__authors {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.course-card__button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
 }
 /*# sourceMappingURL=CourseCard.css.map */
