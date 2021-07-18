@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import './Button.css';
 
 interface ButtonProps {
-	text: string;
-	action?: () => void;
+  text: string;
+  onClick?: (value: SyntheticEvent) => void;
 }
 
-const Button = ({ text, action }: ButtonProps) => {
-	return <button className='button'>{text}</button>;
+const Button = ({ text, onClick }: ButtonProps) => {
+  return (
+    <button className='button' onClick={onClick}>
+      {text}
+    </button>
+  );
 };
 
 export default Button;

@@ -1,10 +1,13 @@
 import React from 'react';
+import { useState } from 'react';
 import Button from '../Button/Button';
 import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParameters';
 import Input from '../Input/Input';
 import './CreateCourse.css';
 
 const CreateCourse = () => {
+  const [descriptionFormValue, setDescriptionFormValue] = useState('');
+
   return (
     <div className='create'>
       <div className='create__controls'>
@@ -13,7 +16,12 @@ const CreateCourse = () => {
             <label>Title</label>
           </div>
           <div className='create__title-input'>
-            <Input placeholder='Enter title' />
+            <Input
+              placeholder='Enter title'
+              required={true}
+              value=''
+              setValue={() => {}}
+            />
           </div>
         </div>
         <div className='create__create-button'>
@@ -25,7 +33,13 @@ const CreateCourse = () => {
           <label>Description</label>
         </div>
         <div className='create__description-input'>
-          <textarea className='create__textarea'></textarea>
+          <textarea
+            className='create__textarea'
+            value={descriptionFormValue}
+            onChange={(event) => setDescriptionFormValue(event.target.value)}
+            minLength={2}
+            required
+          ></textarea>
         </div>
       </div>
       <CreateCourseParameters></CreateCourseParameters>

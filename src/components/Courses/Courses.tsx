@@ -1,15 +1,32 @@
 import React from 'react';
 import Button from '../Button/Button';
-import CourseCard from '../CourseCard/CourseCard';
 import Search from '../Search/Search';
 import './Courses.css';
-import { mockedCoursesList, mockedAuthorsList } from '../../constants/mocks';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Course } from '../../models/Course';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { Author } from '../../models/Author';
+import CourseCard from '../CourseCard/CourseCard';
 
 const Courses = () => {
-  const courseCards = mockedCoursesList.map((course) => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  useEffect(() => {
+    const coursesRequest = axios.get('http://localhost:5000/courses');
+    const authorsRequest = axios.get('http://localhost:5000/authors');
+    axios.all([coursesRequest, authorsRequest]).then(
+      axios.spread((...responses) => {
+        console.log(responses[0], responses[1]);
+        setCourses(responses[0].data);
+        setAuthors(responses[1].data);
+      })
+    );
+  }, []);
+  const courseCards = courses.map((course) => {
     const authorNames = course.authors.map((authorId) => {
-      const author = mockedAuthorsList.find((author) => author.id === authorId);
+      const author = authors.find((author) => author.id === authorId);
       return author?.name ?? '';
     });
     return (
