@@ -18,7 +18,6 @@ const Courses = () => {
     const authorsRequest = axios.get('http://localhost:5000/authors');
     axios.all([coursesRequest, authorsRequest]).then(
       axios.spread((...responses) => {
-        console.log(responses[0], responses[1]);
         setCourses(responses[0].data);
         setAuthors(responses[1].data);
       })

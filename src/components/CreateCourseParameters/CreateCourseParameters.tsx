@@ -86,8 +86,6 @@ const CreateCourseParameters = ({
     })
     .filter((author) => author !== null);
 
-  console.log(duration);
-
   return (
     <div className='parameters'>
       <div className='parameters__left-block'>

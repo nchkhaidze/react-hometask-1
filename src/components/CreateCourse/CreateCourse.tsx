@@ -6,6 +6,9 @@ import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParame
 import Input from '../Input/Input';
 import './CreateCourse.css';
 import { CourseAuthor } from '../../models/Author';
+import { nanoid } from 'nanoid';
+import dayjs from 'dayjs';
+import { useHistory } from 'react-router-dom';
 
 const CreateCourse = () => {
   const [title, setTitle] = useState('');
@@ -13,11 +16,38 @@ const CreateCourse = () => {
   const [courseAuthors, setCourseAuthors] = useState<CourseAuthor[]>([]);
   const [authorName, setAuthorName] = useState('');
   const [duration, setDuration] = useState(60);
+
+  const history = useHistory();
+
   useEffect(() => {
     axios.get('http://localhost:5000/authors').then((response) => {
       setCourseAuthors(response.data);
     });
   }, []);
+
+  const createCourse = async () => {
+    const courseAuthorIds = courseAuthors
+      .filter((author) => author.onCourse)
+      .map((author) => author.id);
+    if (
+      title.length < 2 ||
+      description.length < 2 ||
+      duration < 1 ||
+      courseAuthorIds.length < 1
+    ) {
+      alert('Please fill in all the fields');
+      return;
+    }
+    await axios.post('http://localhost:5000/courses', {
+      id: nanoid(),
+      title,
+      description,
+      creationDate: dayjs().format('D/M/YYYY'),
+      duration,
+      authors: courseAuthorIds,
+    });
+    history.push('/');
+  };
 
   return (
     <div className='create'>
@@ -36,7 +66,7 @@ const CreateCourse = () => {
           </div>
         </div>
         <div className='create__create-button'>
-          <Button text='Create course' />
+          <Button text='Create course' onClick={createCourse} />
         </div>
       </div>
       <div className='create__description'>
