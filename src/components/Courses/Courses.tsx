@@ -4,6 +4,7 @@ import CourseCard from '../CourseCard/CourseCard';
 import Search from '../Search/Search';
 import './Courses.css';
 import { mockedCoursesList, mockedAuthorsList } from '../../constants/mocks';
+import { Link } from 'react-router-dom';
 
 const Courses = () => {
   const courseCards = mockedCoursesList.map((course) => {
@@ -23,11 +24,14 @@ const Courses = () => {
       </div>
     );
   });
+
   return (
     <div className='courses'>
       <div className='courses__controls'>
         <Search></Search>
-        <Button text='Add new course' />
+        <Link to='/create'>
+          <Button text='Add new course' />
+        </Link>
       </div>
       <div className='courses__course-list'>{courseCards}</div>
     </div>
