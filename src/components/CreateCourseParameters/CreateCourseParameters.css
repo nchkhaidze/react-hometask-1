@@ -1,0 +1,61 @@
+.parameters {
+  margin-top: 10px;
+  border: 1px solid brown;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  min-height: 350px;
+}
+
+.parameters__left-block {
+  width: 50%;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-right: 25px;
+}
+
+.parameters__right-block {
+  width: 50%;
+  padding: 10px;
+  padding-left: 25px;
+}
+
+.parameters__header {
+  text-align: center;
+  font-weight: bold;
+  font-weight: 18px;
+  padding: 10px 0;
+}
+
+.parameters__button-container {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.parameters__total-duration {
+  padding-top: 20px;
+  font-size: 1.7rem;
+}
+
+.parameters__author-option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=CreateCourseParameters.css.map */

@@ -1,0 +1,24 @@
+.create {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid darkturquoise;
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__label {
+    padding-bottom: 5px;
+  }
+
+  &__description {
+    margin-top: 20px;
+  }
+
+  &__textarea {
+    width: 100%;
+    border: 1px solid yellow;
+    min-height: 100px;
+  }
+}
