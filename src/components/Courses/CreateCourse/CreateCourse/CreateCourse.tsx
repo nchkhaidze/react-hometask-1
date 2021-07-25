@@ -20,8 +20,8 @@ const CreateCourse = () => {
   const history = useHistory();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/authors').then((response) => {
-      setCourseAuthors(response.data);
+    axios.get('http://localhost:3000/authors/all').then((response) => {
+      setCourseAuthors(response.data.result);
     });
   }, []);
 
@@ -38,15 +38,13 @@ const CreateCourse = () => {
       alert('Please fill in all the fields');
       return;
     }
-    await axios.post('http://localhost:5000/courses', {
-      id: nanoid(),
+    await axios.post('http://localhost:3000/courses/add', {
       title,
       description,
-      creationDate: dayjs().format('D/M/YYYY'),
       duration,
       authors: courseAuthorIds,
     });
-    history.push('/');
+    history.push('/courses');
   };
 
   return (

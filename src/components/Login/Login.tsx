@@ -13,10 +13,11 @@ const Login = () => {
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
-    await axios.post('http://localhost:3000/login', {
+    const jwt = await axios.post('http://localhost:3000/login', {
       email,
       password,
     });
+    localStorage.setItem('token', JSON.stringify(jwt.data.result));
     history.push('/');
   };
 

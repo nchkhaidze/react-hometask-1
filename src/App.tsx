@@ -2,7 +2,12 @@ import React from 'react';
 import './App.css';
 import Courses from './components/Courses/Courses/Courses';
 import Header from './components/Header/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import CreateCourse from './components/Courses/CreateCourse/CreateCourse/CreateCourse';
 import dayjs from 'dayjs';
 import * as durationPlugin from 'dayjs/plugin/duration';
@@ -16,23 +21,26 @@ function App() {
     <Router>
       <div className='wrapper'>
         <Switch>
-          <Route exact path='/create'>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+          <Route exact path='/registration'>
+            <Registration />
+          </Route>
+          <Route exact path='/courses'>
+            <Header></Header>
+            <Courses></Courses>
+          </Route>
+          <Route exact path='/courses/add'>
             <Header></Header>
             <CreateCourse />
           </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/registration'>
-            <Registration />
-          </Route>
-          <Route path='/courses/:courseId'>
+          <Route exact path='/courses/:courseId'>
             <Header></Header>
             <CourseInfo />
           </Route>
           <Route path='/'>
-            <Header></Header>
-            <Courses></Courses>
+            <Redirect to='/courses' />
           </Route>
         </Switch>
       </div>

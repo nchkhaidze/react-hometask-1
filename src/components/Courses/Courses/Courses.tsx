@@ -16,12 +16,12 @@ const Courses = () => {
   const [searchValue, setSearchValue] = useState('');
   const [displayFilteredResults, setDisplayFilteredResults] = useState(false);
   useEffect(() => {
-    const coursesRequest = axios.get('http://localhost:5000/courses');
-    const authorsRequest = axios.get('http://localhost:5000/authors');
+    const coursesRequest = axios.get('http://localhost:3000/courses/all');
+    const authorsRequest = axios.get('http://localhost:3000/authors/all');
     axios.all([coursesRequest, authorsRequest]).then(
       axios.spread((...responses) => {
-        setCourses(responses[0].data);
-        setAuthors(responses[1].data);
+        setCourses(responses[0].data.result);
+        setAuthors(responses[1].data.result);
       })
     );
   }, []);
@@ -44,7 +44,7 @@ const Courses = () => {
           setSearchValue={setSearchValue}
           onSearch={searchCourses}
         ></Search>
-        <Link to='/create'>
+        <Link to='/courses/add'>
           <Button text='Add new course' />
         </Link>
       </div>

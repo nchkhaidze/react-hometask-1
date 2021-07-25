@@ -48,8 +48,8 @@ const CreateCourseParameters = ({
     if (name.length < 2) {
       return;
     }
-    const newAuthor: Author = { id: nanoid(), name };
-    await axios.post('http://localhost:5000/authors', newAuthor);
+    const newAuthor = { name };
+    await axios.post('http://localhost:3000/authors/add', newAuthor);
     setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
   };
 

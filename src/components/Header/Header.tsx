@@ -14,7 +14,12 @@ const Header = () => {
       <div className='header__content'>
         <div className='header__username'>Niki</div>
         <div className='header__logout'>
-          <Button text='Logout' />
+          <Link to='/login'>
+            <Button
+              text='Logout'
+              onClick={() => localStorage.removeItem('token')}
+            />
+          </Link>
         </div>
       </div>
     </div>
