@@ -4,26 +4,36 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import './Login.css';
+import '../Login/Login.css';
 
-const Login = () => {
+const Registration = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
-    await axios.post('http://localhost:3000/login', {
+    await axios.post('http://localhost:3000/register', {
+      name,
       email,
       password,
     });
-    history.push('/');
+    history.push('/login');
   };
 
   return (
     <div className='login'>
       <h2 className='login__title'>Login</h2>
       <form className='login__inputs' onSubmit={handleSubmit}>
+        <div className='login__input-container'>
+          <Input
+            value={name}
+            setValue={setName}
+            placeholder='Enter name'
+            label='Name'
+          />
+        </div>
         <div className='login__input-container'>
           <Input
             value={email}
@@ -41,15 +51,14 @@ const Login = () => {
           />
         </div>
         <div className='login__button-container'>
-          <Button type='submit' text='Login' />
+          <Button type='submit' text='Registration' />
         </div>
       </form>
       <p>
-        If you do not have an account you can{' '}
-        <Link to='/register'>register</Link>
+        If you have an account you can <Link to='/login'>login</Link>
       </p>
     </div>
   );
 };
 
-export default Login;
+export default Registration;

@@ -1,0 +1,25 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+
+  &__input-container {
+    margin-top: 10px;
+  }
+
+  &__button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
