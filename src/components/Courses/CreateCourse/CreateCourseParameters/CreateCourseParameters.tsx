@@ -1,11 +1,9 @@
 import React from 'react';
-import Button from '../Button/Button';
-import Input from '../Input/Input';
+import Button from '../../../Button/Button';
+import Input from '../../../Input/Input';
 import './CreateCourseParameters.css';
-import { useState } from 'react';
-import { Author, CourseAuthor } from '../../models/Author';
+import { Author, CourseAuthor } from '../../../../models/Author';
 import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
 import axios from 'axios';
 import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
 

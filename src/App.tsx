@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Courses from './components/Courses/Courses';
+import Courses from './components/Courses/Courses/Courses';
 import Header from './components/Header/Header';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CreateCourse from './components/Courses/CreateCourse/CreateCourse/CreateCourse';
 import dayjs from 'dayjs';
 import * as durationPlugin from 'dayjs/plugin/duration';
 

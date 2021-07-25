@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import Button from '../Button/Button';
 import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParameters';
-import Input from '../Input/Input';
+import Input from '../../../Input/Input';
 import './CreateCourse.css';
-import { CourseAuthor } from '../../models/Author';
+import { CourseAuthor } from '../../../../models/Author';
 import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
+import Button from '../../../Button/Button';
 
 const CreateCourse = () => {
   const [title, setTitle] = useState('');
