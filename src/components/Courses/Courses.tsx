@@ -8,11 +8,13 @@ import { Course } from '../../models/Course';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Author } from '../../models/Author';
-import CourseCard from '../CourseCard/CourseCard';
+import CourseList from '../CourseList/CourseList';
 
 const Courses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [displayFilteredResults, setDisplayFilteredResults] = useState(false);
   useEffect(() => {
     const coursesRequest = axios.get('http://localhost:5000/courses');
     const authorsRequest = axios.get('http://localhost:5000/authors');
@@ -23,33 +25,35 @@ const Courses = () => {
       })
     );
   }, []);
-  const courseCards = courses.map((course) => {
-    const authorNames = course.authors.map((authorId) => {
-      const author = authors.find((author) => author.id === authorId);
-      return author?.name ?? '';
-    });
-    return (
-      <div className='courses__item' key={course.id}>
-        <CourseCard
-          title={course.title}
-          duration={course.duration}
-          creationDate={course.creationDate}
-          description={course.description}
-          authorNames={authorNames}
-        />
-      </div>
-    );
-  });
+
+  useEffect(() => {
+    if (!searchValue) {
+      setDisplayFilteredResults(false);
+    }
+  }, [searchValue]);
+
+  const searchCourses = () => {
+    setDisplayFilteredResults(true);
+  };
 
   return (
     <div className='courses'>
       <div className='courses__controls'>
-        <Search></Search>
+        <Search
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onSearch={searchCourses}
+        ></Search>
         <Link to='/create'>
           <Button text='Add new course' />
         </Link>
       </div>
-      <div className='courses__course-list'>{courseCards}</div>
+      <CourseList
+        courses={courses}
+        authors={authors}
+        filterValue={searchValue}
+        displayFilteredResults={displayFilteredResults}
+      />
     </div>
   );
 };
