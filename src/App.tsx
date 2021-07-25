@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import * as durationPlugin from 'dayjs/plugin/duration';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
+import CourseInfo from './components/Courses/CourseInfo/CourseInfo';
 
 function App() {
   dayjs.extend(durationPlugin.default);
@@ -24,6 +25,10 @@ function App() {
           </Route>
           <Route path='/registration'>
             <Registration />
+          </Route>
+          <Route path='/courses/:courseId'>
+            <Header></Header>
+            <CourseInfo />
           </Route>
           <Route path='/'>
             <Header></Header>

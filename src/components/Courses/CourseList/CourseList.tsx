@@ -1,6 +1,6 @@
 import React from 'react';
-import { Author } from '../../models/Author';
-import { Course } from '../../models/Course';
+import { Author } from '../../../models/Author';
+import { Course } from '../../../models/Course';
 import CourseCard from '../CourseCard/CourseCard';
 
 interface CourseListProps {
@@ -34,6 +34,7 @@ const CourseList = ({
     return (
       <div className='courses__item' key={course.id}>
         <CourseCard
+          id={course.id}
           title={course.title}
           duration={course.duration}
           creationDate={course.creationDate}
