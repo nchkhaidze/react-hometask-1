@@ -7,6 +7,7 @@ interface InputProps {
   placeholder: string;
   minlength?: number;
   required?: boolean;
+  label?: string;
 }
 
 const Input = ({
@@ -15,17 +16,23 @@ const Input = ({
   required,
   value,
   setValue,
+  label,
 }: InputProps) => {
   return (
-    <input
-      type='text'
-      placeholder={placeholder}
-      className='input'
-      minLength={minlength ?? 0}
-      required={required ?? false}
-      onChange={(event) => setValue(event.target.value)}
-      value={value}
-    />
+    <>
+      <div className='input__label-container'>
+        <label>{label ?? ''}</label>
+      </div>
+      <input
+        type='text'
+        placeholder={placeholder}
+        className='input'
+        minLength={minlength ?? 0}
+        required={required ?? false}
+        onChange={(event) => setValue(event.target.value)}
+        value={value}
+      />
+    </>
   );
 };
 

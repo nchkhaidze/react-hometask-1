@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import Button from '../Button/Button';
+import { Link } from 'react-router-dom';
+import Button from '../../Button/Button';
 import './CourseCard.css';
 
 interface CourseCardProps {
+  id: string;
   title: string;
   duration: number;
   creationDate: string;
@@ -12,6 +14,7 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({
+  id,
   title,
   duration,
   creationDate,
@@ -39,7 +42,9 @@ const CourseCard = ({
           <b>Created: {creationDate}</b>
         </div>
         <div className='course-card__button-container'>
-          <Button text='Show course' />
+          <Link to={`/courses/${id}`}>
+            <Button text='Show course' />
+          </Link>
         </div>
       </div>
     </div>

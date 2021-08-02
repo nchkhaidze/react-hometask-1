@@ -4,11 +4,12 @@ import './Button.css';
 interface ButtonProps {
   text: string;
   onClick?: (value: SyntheticEvent) => void;
+  type?: 'button' | 'reset' | 'submit';
 }
 
-const Button = ({ text, onClick }: ButtonProps) => {
+const Button = ({ text, onClick, type }: ButtonProps) => {
   return (
-    <button className='button' onClick={onClick}>
+    <button type={type ?? 'button'} className='button' onClick={onClick}>
       {text}
     </button>
   );

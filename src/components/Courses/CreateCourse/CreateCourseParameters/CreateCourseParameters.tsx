@@ -1,11 +1,9 @@
 import React from 'react';
-import Button from '../Button/Button';
-import Input from '../Input/Input';
+import Button from '../../../Button/Button';
+import Input from '../../../Input/Input';
 import './CreateCourseParameters.css';
-import { useState } from 'react';
-import { Author, CourseAuthor } from '../../models/Author';
+import { Author, CourseAuthor } from '../../../../models/Author';
 import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
 import axios from 'axios';
 import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
 
@@ -50,8 +48,8 @@ const CreateCourseParameters = ({
     if (name.length < 2) {
       return;
     }
-    const newAuthor: Author = { id: nanoid(), name };
-    await axios.post('http://localhost:5000/authors', newAuthor);
+    const newAuthor = { name };
+    await axios.post('http://localhost:3000/authors/add', newAuthor);
     setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
   };
 

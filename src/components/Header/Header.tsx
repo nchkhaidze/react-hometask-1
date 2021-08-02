@@ -8,13 +8,18 @@ const Header = () => {
     <div className='header'>
       <div className='header__logo-container'>
         <Link to='/'>
-          <img src='logo.jpg' alt='Site logo' className='header__logo' />
+          <img src='/logo.jpg' alt='Site logo' className='header__logo' />
         </Link>
       </div>
       <div className='header__content'>
         <div className='header__username'>Niki</div>
         <div className='header__logout'>
-          <Button text='Logout' />
+          <Link to='/login'>
+            <Button
+              text='Logout'
+              onClick={() => localStorage.removeItem('token')}
+            />
+          </Link>
         </div>
       </div>
     </div>

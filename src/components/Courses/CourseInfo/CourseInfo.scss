@@ -1,0 +1,28 @@
+.course-info {
+  border: 1px solid lightblue;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 20px;
+  &__body {
+    display: flex;
+  }
+
+  &__description {
+    flex-grow: 4;
+    padding-right: 10px;
+  }
+
+  &__details {
+    flex-grow: 1;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__description-item {
+    font-size: 14px;
+    padding-bottom: 5px;
+  }
+}
