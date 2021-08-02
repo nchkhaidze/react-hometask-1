@@ -5,12 +5,13 @@ interface ButtonProps {
   text: string;
   onClick?: (value: SyntheticEvent) => void;
   type?: 'button' | 'reset' | 'submit';
+  iconUrl?: string;
 }
 
-const Button = ({ text, onClick, type }: ButtonProps) => {
+const Button = ({ text, onClick, type, iconUrl }: ButtonProps) => {
   return (
     <button type={type ?? 'button'} className='button' onClick={onClick}>
-      {text}
+      {iconUrl ? <img src={iconUrl} alt='icon' width={20} /> : text}
     </button>
   );
 };

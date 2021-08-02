@@ -8,6 +8,7 @@ interface CourseListProps {
   authors: Author[];
   filterValue: string;
   displayFilteredResults: boolean;
+  deleteCourse: (id: string) => void;
 }
 
 const CourseList = ({
@@ -15,6 +16,7 @@ const CourseList = ({
   authors,
   filterValue,
   displayFilteredResults,
+  deleteCourse,
 }: CourseListProps) => {
   const courseCards = courses.map((course) => {
     const authorNames = course.authors.map((authorId) => {
@@ -40,6 +42,7 @@ const CourseList = ({
           creationDate={course.creationDate}
           description={course.description}
           authorNames={authorNames}
+          deleteCourse={deleteCourse}
         />
       </div>
     );

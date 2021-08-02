@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { SyntheticEvent } from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { login } from '../../store/user/reducer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import './Login.css';
@@ -10,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
@@ -17,6 +20,7 @@ const Login = () => {
       email,
       password,
     });
+    dispatch(login({ email, name: email, token: jwt.data.result }));
     localStorage.setItem('token', JSON.stringify(jwt.data.result));
     history.push('/');
   };
