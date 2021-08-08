@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Course } from '../../models/Course';
+import { fetchCourses } from './thunk';
 
 interface CoursesState {
   courses: Course[];
@@ -28,6 +29,12 @@ export const coursesSlice = createSlice({
     removeCourse: (state, action) => {
       const id = action.payload;
       state.courses = state.courses.filter((course) => course.id !== id);
+    },
+  },
+  extraReducers: {
+    // @ts-ignore
+    [fetchCourses.fulfilled]: (state, action) => {
+      state.courses = state.courses.concat(action.payload);
     },
   },
 });
