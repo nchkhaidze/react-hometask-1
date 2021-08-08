@@ -1,38 +1,31 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
-import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParameters';
 import Input from '../../../Input/Input';
 import './CreateCourse.css';
-import { CourseAuthor } from '../../../../models/Author';
+import { Author } from '../../../../models/Author';
 import { useHistory } from 'react-router-dom';
 import Button from '../../../Button/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCourses } from '../../../../store/courses/reducer';
 import { ApiService } from '../../../../services/apiService';
+import EditCourseAuthors from '../CreateCourseParameters/EditCourseAuthors';
+import { RootState } from '../../../../store';
 
 const CreateCourse = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [courseAuthors, setCourseAuthors] = useState<CourseAuthor[]>([]);
+  const [courseAuthors, setCourseAuthors] = useState<Author[]>([]);
   const [authorName, setAuthorName] = useState('');
   const [duration, setDuration] = useState(60);
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const allAuthors = useSelector((state: RootState) => state.authors.authors);
 
   const apiService = new ApiService();
 
-  useEffect(() => {
-    axios.get('http://localhost:3000/authors/all').then((response) => {
-      setCourseAuthors(response.data.result);
-    });
-  }, []);
-
   const createCourse = async () => {
-    const courseAuthorIds = courseAuthors
-      .filter((author) => author.onCourse)
-      .map((author) => author.id);
+    const courseAuthorIds = courseAuthors.map((author) => author.id);
     if (
       title.length < 2 ||
       description.length < 2 ||
@@ -87,14 +80,15 @@ const CreateCourse = () => {
           ></textarea>
         </div>
       </div>
-      <CreateCourseParameters
+      <EditCourseAuthors
+        allAuthors={allAuthors}
         courseAuthors={courseAuthors}
         setCourseAuthors={setCourseAuthors}
         authorName={authorName}
         setAuthorName={setAuthorName}
         duration={duration}
         setDuration={setDuration}
-      ></CreateCourseParameters>
+      ></EditCourseAuthors>
     </div>
   );
 };
