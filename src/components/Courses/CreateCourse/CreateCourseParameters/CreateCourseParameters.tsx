@@ -3,9 +3,10 @@ import Button from '../../../Button/Button';
 import Input from '../../../Input/Input';
 import './CreateCourseParameters.css';
 import { Author, CourseAuthor } from '../../../../models/Author';
-import { nanoid } from 'nanoid';
 import axios from 'axios';
 import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
+import { useDispatch } from 'react-redux';
+import { addAuthors } from '../../../../store/authors/reducer';
 
 interface CreateCourseParametersProps {
   courseAuthors: CourseAuthor[];
@@ -24,6 +25,8 @@ const CreateCourseParameters = ({
   duration,
   setDuration,
 }: CreateCourseParametersProps) => {
+  const dispatch = useDispatch();
+
   const addCourseAuthor = (author: Author) => {
     const authorToAdd = courseAuthors.find(
       (courseAuthor: CourseAuthor) => author.id === courseAuthor.id
@@ -50,6 +53,7 @@ const CreateCourseParameters = ({
     }
     const newAuthor = { name };
     await axios.post('http://localhost:3000/authors/add', newAuthor);
+    dispatch(addAuthors(newAuthor));
     setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
   };
 

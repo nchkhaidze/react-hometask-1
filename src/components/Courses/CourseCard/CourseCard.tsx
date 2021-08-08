@@ -11,6 +11,7 @@ interface CourseCardProps {
   creationDate: string;
   description: string;
   authorNames: string[];
+  deleteCourse: (id: string) => void;
 }
 
 const CourseCard = ({
@@ -20,6 +21,7 @@ const CourseCard = ({
   creationDate,
   description,
   authorNames,
+  deleteCourse,
 }: CourseCardProps) => {
   const durationInHours = dayjs.duration(duration, 'minutes').format('H:mm');
 
@@ -45,6 +47,12 @@ const CourseCard = ({
           <Link to={`/courses/${id}`}>
             <Button text='Show course' />
           </Link>
+          <Button
+            text='Delete'
+            iconUrl='./deleteIcon.png'
+            onClick={() => deleteCourse(id)}
+          />
+          <Button text='Update' iconUrl='./editIcon.png' />
         </div>
       </div>
     </div>

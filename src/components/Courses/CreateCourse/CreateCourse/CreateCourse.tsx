@@ -5,10 +5,10 @@ import CreateCourseParameters from '../CreateCourseParameters/CreateCourseParame
 import Input from '../../../Input/Input';
 import './CreateCourse.css';
 import { CourseAuthor } from '../../../../models/Author';
-import { nanoid } from 'nanoid';
-import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
 import Button from '../../../Button/Button';
+import { useDispatch } from 'react-redux';
+import { addCourses } from '../../../../store/courses/reducer';
 
 const CreateCourse = () => {
   const [title, setTitle] = useState('');
@@ -17,6 +17,7 @@ const CreateCourse = () => {
   const [authorName, setAuthorName] = useState('');
   const [duration, setDuration] = useState(60);
 
+  const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
@@ -38,12 +39,14 @@ const CreateCourse = () => {
       alert('Please fill in all the fields');
       return;
     }
-    await axios.post('http://localhost:3000/courses/add', {
+    const newCourse = {
       title,
       description,
       duration,
       authors: courseAuthorIds,
-    });
+    };
+    await axios.post('http://localhost:3000/courses/add', newCourse);
+    dispatch(addCourses(newCourse));
     history.push('/courses');
   };
 

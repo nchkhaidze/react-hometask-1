@@ -8,14 +8,15 @@
     flex-direction: column;
     flex-grow: 1;
     padding-right: 30px;
-    width: 80%;
+    width: 70%;
   }
 
   &__right-block {
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    width: 30%;
+    text-align: right;
   }
 
   &__description {
@@ -41,7 +42,7 @@
 
   &__button-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
   }
