@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import { useDispatch } from 'react-redux';
 import { addCourses } from '../../../../store/courses/reducer';
+import { ApiService } from '../../../../services/apiService';
 
 const CreateCourse = () => {
   const [title, setTitle] = useState('');
@@ -19,6 +20,8 @@ const CreateCourse = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const apiService = new ApiService();
 
   useEffect(() => {
     axios.get('http://localhost:3000/authors/all').then((response) => {
@@ -45,8 +48,8 @@ const CreateCourse = () => {
       duration,
       authors: courseAuthorIds,
     };
-    await axios.post('http://localhost:3000/courses/add', newCourse);
-    dispatch(addCourses(newCourse));
+    const course = await apiService.addCourse(newCourse);
+    dispatch(addCourses(course.data.result));
     history.push('/courses');
   };
 

@@ -7,6 +7,7 @@ import axios from 'axios';
 import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
 import { useDispatch } from 'react-redux';
 import { addAuthors } from '../../../../store/authors/reducer';
+import { ApiService } from '../../../../services/apiService';
 
 interface CreateCourseParametersProps {
   courseAuthors: CourseAuthor[];
@@ -26,6 +27,7 @@ const CreateCourseParameters = ({
   setDuration,
 }: CreateCourseParametersProps) => {
   const dispatch = useDispatch();
+  const apiService = new ApiService();
 
   const addCourseAuthor = (author: Author) => {
     const authorToAdd = courseAuthors.find(
@@ -52,8 +54,8 @@ const CreateCourseParameters = ({
       return;
     }
     const newAuthor = { name };
-    await axios.post('http://localhost:3000/authors/add', newAuthor);
-    dispatch(addAuthors(newAuthor));
+    const addedAuthor = await apiService.addAuthor(newAuthor);
+    dispatch(addAuthors(addedAuthor.data.result));
     setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
   };
 
