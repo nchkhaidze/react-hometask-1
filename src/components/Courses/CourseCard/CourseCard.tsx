@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Button/Button';
 import './CourseCard.css';
 
@@ -24,6 +24,7 @@ const CourseCard = ({
   deleteCourse,
 }: CourseCardProps) => {
   const durationInHours = dayjs.duration(duration, 'minutes').format('H:mm');
+  const history = useHistory();
 
   return (
     <div className='course-card'>
@@ -52,7 +53,11 @@ const CourseCard = ({
             iconUrl='./deleteIcon.png'
             onClick={() => deleteCourse(id)}
           />
-          <Button text='Update' iconUrl='./editIcon.png' />
+          <Button
+            text='Update'
+            iconUrl='./editIcon.png'
+            onClick={() => history.push(`/courses/update/${id}`)}
+          />
         </div>
       </div>
     </div>

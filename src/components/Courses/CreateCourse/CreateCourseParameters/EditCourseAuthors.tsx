@@ -3,10 +3,9 @@ import Input from '../../../Input/Input';
 import './EditCourseAuthors.css';
 import { Author } from '../../../../models/Author';
 import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addAuthors } from '../../../../store/authors/reducer';
 import { ApiService } from '../../../../services/apiService';
-import { RootState } from '../../../../store';
 import { useState } from 'react';
 
 interface EditCourseAuthorsProps {
@@ -31,8 +30,6 @@ const EditCourseAuthors = ({
   const dispatch = useDispatch();
   const apiService = new ApiService();
   const [onCourseMap, setOnCourseMap] = useState(new Map<string, boolean>());
-
-  console.log(courseAuthors);
 
   const addCourseAuthor = (newAuthor: Author) => {
     setOnCourseMap(onCourseMap.set(newAuthor.id, true));

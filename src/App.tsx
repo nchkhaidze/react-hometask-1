@@ -14,6 +14,7 @@ import * as durationPlugin from 'dayjs/plugin/duration';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import CourseInfo from './components/Courses/CourseInfo/CourseInfo';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
   dayjs.extend(durationPlugin.default);
@@ -39,6 +40,10 @@ function App() {
             <Header></Header>
             <CourseInfo />
           </Route>
+          <PrivateRoute
+            component={CreateCourse}
+            path='/courses/update/:courseId'
+          />
           <Route path='/'>
             <Redirect to='/courses' />
           </Route>
