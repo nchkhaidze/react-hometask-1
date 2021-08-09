@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import { addAuthors } from '../../../../store/authors/reducer';
 import { ApiService } from '../../../../services/apiService';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 interface EditCourseAuthorsProps {
+  editMode: boolean;
   allAuthors: Author[];
   courseAuthors: Author[];
   setCourseAuthors: (authors: Author[]) => void;
@@ -19,6 +21,7 @@ interface EditCourseAuthorsProps {
 }
 
 const EditCourseAuthors = ({
+  editMode,
   allAuthors,
   courseAuthors,
   setCourseAuthors,
@@ -30,6 +33,16 @@ const EditCourseAuthors = ({
   const dispatch = useDispatch();
   const apiService = new ApiService();
   const [onCourseMap, setOnCourseMap] = useState(new Map<string, boolean>());
+
+  useEffect(() => {
+    if (editMode) {
+      const onCourseMap = new Map<string, boolean>();
+      courseAuthors.forEach((author) => {
+        onCourseMap.set(author.id, true);
+      });
+      setOnCourseMap(onCourseMap);
+    }
+  }, [editMode, courseAuthors]);
 
   const addCourseAuthor = (newAuthor: Author) => {
     setOnCourseMap(onCourseMap.set(newAuthor.id, true));

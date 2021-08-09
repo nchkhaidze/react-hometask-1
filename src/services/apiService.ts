@@ -20,4 +20,12 @@ export class ApiService {
       },
     });
   }
+
+  async updateCourse(id: string, course: CourseDTO) {
+    return await axios.put(`http://localhost:3000/courses/${id}`, course, {
+      headers: {
+        Authorization: JSON.parse(this.token),
+      },
+    });
+  }
 }

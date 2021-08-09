@@ -3,28 +3,57 @@ import { useState } from 'react';
 import Input from '../../../Input/Input';
 import './CourseForm.css';
 import { Author } from '../../../../models/Author';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCourses } from '../../../../store/courses/reducer';
+import { addCourses, updateCourse } from '../../../../store/courses/reducer';
 import { ApiService } from '../../../../services/apiService';
 import EditCourseAuthors from '../EditCourseAuthors/EditCourseAuthors';
 import { RootState } from '../../../../store';
+import { useEffect } from 'react';
 
-const CourseForm = () => {
+interface CourseFormProps {
+  editMode: boolean;
+}
+
+interface CourseFormRouteParams {
+  courseId: string;
+}
+
+const CourseForm = ({ editMode }: CourseFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [courseAuthors, setCourseAuthors] = useState<Author[]>([]);
   const [authorName, setAuthorName] = useState('');
   const [duration, setDuration] = useState(60);
+  const { courseId } = useParams<CourseFormRouteParams>();
 
   const dispatch = useDispatch();
   const history = useHistory();
+
   const allAuthors = useSelector((state: RootState) => state.authors.authors);
+  const currentCourse = useSelector((state: RootState) =>
+    state.courses.courses.find((course) => course.id === courseId)
+  );
+
+  useEffect(() => {
+    if (editMode && currentCourse) {
+      setTitle(currentCourse?.title ?? '');
+      setDescription(currentCourse?.description ?? '');
+      setDuration(currentCourse?.duration ?? 0);
+      const courseAuthors = currentCourse?.authors
+        .map((authorId) => {
+          return allAuthors.find((author) => author.id === authorId);
+        })
+        .filter((author) => Boolean(author));
+      // @ts-ignore
+      setCourseAuthors(courseAuthors ?? []);
+    }
+  }, [editMode, currentCourse]);
 
   const apiService = new ApiService();
 
-  const createCourse = async () => {
+  const createCourse = async (editMode: boolean) => {
     const courseAuthorIds = courseAuthors.map((author) => author.id);
     if (
       title.length < 2 ||
@@ -41,8 +70,15 @@ const CourseForm = () => {
       duration,
       authors: courseAuthorIds,
     };
-    const course = await apiService.addCourse(newCourse);
-    dispatch(addCourses(course.data.result));
+    console.log(newCourse);
+    if (editMode) {
+      const course = await apiService.updateCourse(courseId, newCourse);
+      dispatch(updateCourse(course.data.result));
+    } else {
+      const course = await apiService.addCourse(newCourse);
+      dispatch(addCourses(course.data.result));
+    }
+
     history.push('/courses');
   };
 
@@ -63,7 +99,7 @@ const CourseForm = () => {
           </div>
         </div>
         <div className='create__create-button'>
-          <Button text='Create course' onClick={createCourse} />
+          <Button text='Create course' onClick={() => createCourse(editMode)} />
         </div>
       </div>
       <div className='create__description'>
@@ -81,6 +117,7 @@ const CourseForm = () => {
         </div>
       </div>
       <EditCourseAuthors
+        editMode={editMode}
         allAuthors={allAuthors}
         courseAuthors={courseAuthors}
         setCourseAuthors={setCourseAuthors}

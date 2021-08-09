@@ -34,14 +34,14 @@ function App() {
           </Route>
           <Route exact path='/courses/add'>
             <Header></Header>
-            <CourseForm />
+            <CourseForm editMode={false} />
           </Route>
           <Route exact path='/courses/:courseId'>
             <Header></Header>
             <CourseInfo />
           </Route>
           <PrivateRoute
-            component={CourseForm}
+            component={() => CourseForm({ editMode: true })}
             path='/courses/update/:courseId'
           />
           <Route path='/'>

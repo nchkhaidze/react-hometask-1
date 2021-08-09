@@ -22,7 +22,7 @@ export const coursesSlice = createSlice({
       state.courses = state.courses.concat(action.payload);
     },
     updateCourse: (state, action) => {
-      const id = action.payload;
+      const id = action.payload.id;
       state.courses = state.courses.filter((course) => course.id !== id);
       state.courses.push(action.payload);
     },
