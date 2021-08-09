@@ -1,17 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
 import Input from '../../../Input/Input';
-import './CreateCourse.css';
+import './CourseForm.css';
 import { Author } from '../../../../models/Author';
 import { useHistory } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCourses } from '../../../../store/courses/reducer';
 import { ApiService } from '../../../../services/apiService';
-import EditCourseAuthors from '../CreateCourseParameters/EditCourseAuthors';
+import EditCourseAuthors from '../EditCourseAuthors/EditCourseAuthors';
 import { RootState } from '../../../../store';
 
-const CreateCourse = () => {
+const CourseForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [courseAuthors, setCourseAuthors] = useState<Author[]>([]);
@@ -93,4 +93,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CourseForm;

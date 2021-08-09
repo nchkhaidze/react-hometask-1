@@ -8,7 +8,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import CreateCourse from './components/Courses/CreateCourse/CreateCourse/CreateCourse';
+import CourseForm from './components/Courses/CreateCourse/CourseForm/CourseForm';
 import dayjs from 'dayjs';
 import * as durationPlugin from 'dayjs/plugin/duration';
 import Login from './components/Login/Login';
@@ -34,14 +34,14 @@ function App() {
           </Route>
           <Route exact path='/courses/add'>
             <Header></Header>
-            <CreateCourse />
+            <CourseForm />
           </Route>
           <Route exact path='/courses/:courseId'>
             <Header></Header>
             <CourseInfo />
           </Route>
           <PrivateRoute
-            component={CreateCourse}
+            component={CourseForm}
             path='/courses/update/:courseId'
           />
           <Route path='/'>

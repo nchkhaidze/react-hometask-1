@@ -2,7 +2,7 @@ import Button from '../../../Button/Button';
 import Input from '../../../Input/Input';
 import './EditCourseAuthors.css';
 import { Author } from '../../../../models/Author';
-import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
+import EditCourseDuration from '../EditCourseDuration/EditCourseDuration';
 import { useDispatch } from 'react-redux';
 import { addAuthors } from '../../../../store/authors/reducer';
 import { ApiService } from '../../../../services/apiService';
@@ -99,7 +99,7 @@ const EditCourseAuthors = ({
             />
           </div>
         </div>
-        <CreateCourseDuration duration={duration} setDuration={setDuration} />
+        <EditCourseDuration duration={duration} setDuration={setDuration} />
       </div>
       <div className='parameters__right-block'>
         <div className='parameters__header'>Authors</div>
