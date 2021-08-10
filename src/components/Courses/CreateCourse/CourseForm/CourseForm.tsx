@@ -6,11 +6,10 @@ import { Author } from '../../../../models/Author';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCourses, updateCourse } from '../../../../store/courses/reducer';
-import { ApiService } from '../../../../services/apiService';
 import EditCourseAuthors from '../EditCourseAuthors/EditCourseAuthors';
 import { RootState } from '../../../../store';
 import { useEffect } from 'react';
+import { addCourse, updateCourse } from '../../../../store/courses/thunk';
 
 interface CourseFormProps {
   editMode: boolean;
@@ -51,8 +50,6 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
     }
   }, [editMode, currentCourse]);
 
-  const apiService = new ApiService();
-
   const createCourse = async (editMode: boolean) => {
     const courseAuthorIds = courseAuthors.map((author) => author.id);
     if (
@@ -71,11 +68,9 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
       authors: courseAuthorIds,
     };
     if (editMode) {
-      const course = await apiService.updateCourse(courseId, newCourse);
-      dispatch(updateCourse(course.data.result));
+      dispatch(updateCourse({ id: courseId, newCourse }));
     } else {
-      const course = await apiService.addCourse(newCourse);
-      dispatch(addCourses(course.data.result));
+      dispatch(addCourse({ newCourse }));
     }
 
     history.push('/courses');

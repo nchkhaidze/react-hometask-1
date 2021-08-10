@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { userLogout } from './thunk';
 
 interface UserState {
   isAuth: boolean;
@@ -28,7 +29,10 @@ export const userSlice = createSlice({
       state.token = token;
       state.role = role;
     },
-    logout: (state) => {
+  },
+  extraReducers: {
+    // @ts-ignore
+    [userLogout.fulfilled]: (state) => {
       state.isAuth = false;
       state.email = '';
       state.name = '';
@@ -38,7 +42,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login } = userSlice.actions;
 
 export const selectCurrentUser = (state: UserState) => state;
 

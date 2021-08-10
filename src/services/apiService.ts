@@ -42,4 +42,14 @@ export class ApiService {
       },
     });
   }
+
+  async logout() {
+    return await axios.delete('http://localhost:3000/logout', {
+      headers: {
+        Authorization: JSON.parse(
+          localStorage.getItem('token') ?? JSON.stringify('')
+        ),
+      },
+    });
+  }
 }

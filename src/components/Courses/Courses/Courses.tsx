@@ -15,6 +15,8 @@ const Courses = () => {
   const dispatch = useDispatch();
   const courses = useSelector((state: RootState) => state.courses.courses);
   const authors = useSelector((state: RootState) => state.authors.authors);
+  const userIsAdmin =
+    useSelector((state: RootState) => state.users.role) === 'admin';
 
   useEffect(() => {
     if (!searchValue) {
@@ -38,11 +40,12 @@ const Courses = () => {
           setSearchValue={setSearchValue}
           onSearch={searchCourses}
         ></Search>
-        <Link to='/courses/add'>
+        <Link to='/courses/add' hidden={!userIsAdmin}>
           <Button text='Add new course' />
         </Link>
       </div>
       <CourseList
+        userIsAdmin={userIsAdmin}
         deleteCourse={deleteCourse}
         courses={courses}
         authors={authors}

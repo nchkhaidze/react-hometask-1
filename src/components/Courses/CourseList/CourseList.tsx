@@ -11,6 +11,7 @@ interface CourseListProps {
   filterValue: string;
   displayFilteredResults: boolean;
   deleteCourse: (id: string) => void;
+  userIsAdmin: boolean;
 }
 
 const CourseList = ({
@@ -19,10 +20,9 @@ const CourseList = ({
   filterValue,
   displayFilteredResults,
   deleteCourse,
+  userIsAdmin,
 }: CourseListProps) => {
-  const userIsAdmin =
-    useSelector((state: RootState) => state.users.role) === 'admin';
-  const courseCards = courses.map((course) => {
+  const courseCards = courses?.map((course) => {
     const authorNames = course.authors.map((authorId) => {
       const author = authors.find((author) => author.id === authorId);
       return author?.name ?? '';
