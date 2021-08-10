@@ -38,10 +38,10 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
 
   useEffect(() => {
     if (editMode && currentCourse) {
-      setTitle(currentCourse?.title ?? '');
-      setDescription(currentCourse?.description ?? '');
-      setDuration(currentCourse?.duration ?? 0);
-      const courseAuthors = currentCourse?.authors
+      setTitle(currentCourse.title);
+      setDescription(currentCourse.description);
+      setDuration(currentCourse.duration);
+      const courseAuthors = currentCourse.authors
         .map((authorId) => {
           return allAuthors.find((author) => author.id === authorId);
         })
@@ -70,7 +70,6 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
       duration,
       authors: courseAuthorIds,
     };
-    console.log(newCourse);
     if (editMode) {
       const course = await apiService.updateCourse(courseId, newCourse);
       dispatch(updateCourse(course.data.result));
@@ -99,7 +98,10 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
           </div>
         </div>
         <div className='create__create-button'>
-          <Button text='Create course' onClick={() => createCourse(editMode)} />
+          <Button
+            text={editMode ? 'Update course' : 'Create course'}
+            onClick={() => createCourse(editMode)}
+          />
         </div>
       </div>
       <div className='create__description'>

@@ -3,13 +3,11 @@ import Search from '../../Search/Search';
 import './Courses.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Course } from '../../../models/Course';
 import { useEffect } from 'react';
-import { Author } from '../../../models/Author';
 import CourseList from '../CourseList/CourseList';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeCourse } from '../../../store/courses/reducer';
 import { RootState } from '../../../store';
+import { removeCourse } from '../../../store/courses/thunk';
 
 const Courses = () => {
   const [searchValue, setSearchValue] = useState('');

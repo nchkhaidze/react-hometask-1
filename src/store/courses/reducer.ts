@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Course } from '../../models/Course';
-import { fetchCourses } from './thunk';
+import { removeCourse, fetchCourses } from './thunk';
 
 interface CoursesState {
   courses: Course[];
@@ -26,20 +26,21 @@ export const coursesSlice = createSlice({
       state.courses = state.courses.filter((course) => course.id !== id);
       state.courses.push(action.payload);
     },
-    removeCourse: (state, action) => {
-      const id = action.payload;
-      state.courses = state.courses.filter((course) => course.id !== id);
-    },
   },
   extraReducers: {
     // @ts-ignore
     [fetchCourses.fulfilled]: (state, action) => {
       state.courses = state.courses.concat(action.payload);
     },
+    // @ts-ignore
+    [removeCourse.fulfilled]: (state, action) => {
+      const id = action.payload;
+      state.courses = state.courses.filter((course) => course.id !== id);
+    },
   },
 });
 
-export const { addCourses, updateCourse, removeCourse } = coursesSlice.actions;
+export const { addCourses, updateCourse } = coursesSlice.actions;
 
 export const selectCourses = (state: any) => state.courses.courses;
 

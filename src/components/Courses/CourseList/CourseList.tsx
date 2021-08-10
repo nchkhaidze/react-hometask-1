@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Author } from '../../../models/Author';
 import { Course } from '../../../models/Course';
+import { RootState } from '../../../store';
 import CourseCard from '../CourseCard/CourseCard';
 
 interface CourseListProps {
@@ -18,6 +20,8 @@ const CourseList = ({
   displayFilteredResults,
   deleteCourse,
 }: CourseListProps) => {
+  const userIsAdmin =
+    useSelector((state: RootState) => state.users.role) === 'admin';
   const courseCards = courses.map((course) => {
     const authorNames = course.authors.map((authorId) => {
       const author = authors.find((author) => author.id === authorId);
@@ -43,6 +47,7 @@ const CourseList = ({
           description={course.description}
           authorNames={authorNames}
           deleteCourse={deleteCourse}
+          userIsAdmin={userIsAdmin}
         />
       </div>
     );
