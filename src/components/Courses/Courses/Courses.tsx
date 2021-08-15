@@ -33,7 +33,7 @@ const Courses = () => {
   };
 
   return (
-    <div className='courses'>
+    <div className='courses' data-testid='courses'>
       <div className='courses__controls'>
         <Search
           searchValue={searchValue}
