@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Button/Button';
 import './CourseCard.css';
 
@@ -12,6 +12,7 @@ interface CourseCardProps {
   description: string;
   authorNames: string[];
   deleteCourse: (id: string) => void;
+  userIsAdmin: boolean;
 }
 
 const CourseCard = ({
@@ -22,8 +23,31 @@ const CourseCard = ({
   description,
   authorNames,
   deleteCourse,
+  userIsAdmin,
 }: CourseCardProps) => {
   const durationInHours = dayjs.duration(duration, 'minutes').format('H:mm');
+  const history = useHistory();
+  const buttonSection = userIsAdmin ? (
+    <>
+      <Link to={`/courses/${id}`}>
+        <Button text='Show course' />
+      </Link>
+      <Button
+        text='Delete'
+        iconUrl='./deleteIcon.png'
+        onClick={() => deleteCourse(id)}
+      />
+      <Button
+        text='Update'
+        iconUrl='./editIcon.png'
+        onClick={() => history.push(`/courses/update/${id}`)}
+      />
+    </>
+  ) : (
+    <Link to={`/courses/${id}`}>
+      <Button text='Show course' />
+    </Link>
+  );
 
   return (
     <div className='course-card'>
@@ -43,17 +67,7 @@ const CourseCard = ({
         <div className='course-card__created course-card__description-item'>
           <b>Created: {creationDate}</b>
         </div>
-        <div className='course-card__button-container'>
-          <Link to={`/courses/${id}`}>
-            <Button text='Show course' />
-          </Link>
-          <Button
-            text='Delete'
-            iconUrl='./deleteIcon.png'
-            onClick={() => deleteCourse(id)}
-          />
-          <Button text='Update' iconUrl='./editIcon.png' />
-        </div>
+        <div className='course-card__button-container'>{buttonSection}</div>
       </div>
     </div>
   );

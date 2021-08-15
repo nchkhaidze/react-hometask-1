@@ -1,15 +1,15 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-interface CreateCourseDurationProps {
+interface EditCourseDurationProps {
   duration: number;
   setDuration: (value: number) => void;
 }
 
-const CreateCourseDuration = ({
+const EditCourseDuration = ({
   duration,
   setDuration,
-}: CreateCourseDurationProps) => {
+}: EditCourseDurationProps) => {
   const durationHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) < 1) {
       return;
@@ -41,4 +41,4 @@ const CreateCourseDuration = ({
   );
 };
 
-export default CreateCourseDuration;
+export default EditCourseDuration;

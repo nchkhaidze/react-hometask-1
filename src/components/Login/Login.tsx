@@ -20,7 +20,8 @@ const Login = () => {
       email,
       password,
     });
-    dispatch(login({ email, name: email, token: jwt.data.result }));
+    const role = email.split('@')[0] === 'admin' ? 'admin' : 'user';
+    dispatch(login({ email, name: email, token: jwt.data.result, role }));
     localStorage.setItem('token', JSON.stringify(jwt.data.result));
     history.push('/');
   };

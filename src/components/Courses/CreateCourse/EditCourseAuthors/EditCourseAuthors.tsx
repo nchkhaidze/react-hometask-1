@@ -1,50 +1,59 @@
-import React from 'react';
 import Button from '../../../Button/Button';
 import Input from '../../../Input/Input';
-import './CreateCourseParameters.css';
-import { Author, CourseAuthor } from '../../../../models/Author';
-import axios from 'axios';
-import CreateCourseDuration from '../CreateCourseDuration/CreateCourseDuration';
+import './EditCourseAuthors.css';
+import { Author } from '../../../../models/Author';
+import EditCourseDuration from '../EditCourseDuration/EditCourseDuration';
 import { useDispatch } from 'react-redux';
 import { addAuthors } from '../../../../store/authors/reducer';
+import { ApiService } from '../../../../services/apiService';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-interface CreateCourseParametersProps {
-  courseAuthors: CourseAuthor[];
-  setCourseAuthors: (authors: CourseAuthor[]) => void;
+interface EditCourseAuthorsProps {
+  editMode: boolean;
+  allAuthors: Author[];
+  courseAuthors: Author[];
+  setCourseAuthors: (authors: Author[]) => void;
   authorName: string;
   setAuthorName: (name: string) => void;
   duration: number;
   setDuration: (duration: number) => void;
 }
 
-const CreateCourseParameters = ({
+const EditCourseAuthors = ({
+  editMode,
+  allAuthors,
   courseAuthors,
   setCourseAuthors,
   authorName,
   setAuthorName,
   duration,
   setDuration,
-}: CreateCourseParametersProps) => {
+}: EditCourseAuthorsProps) => {
   const dispatch = useDispatch();
+  const apiService = new ApiService();
+  const [onCourseMap, setOnCourseMap] = useState(new Map<string, boolean>());
 
-  const addCourseAuthor = (author: Author) => {
-    const authorToAdd = courseAuthors.find(
-      (courseAuthor: CourseAuthor) => author.id === courseAuthor.id
-    );
-    if (authorToAdd) {
-      authorToAdd.onCourse = true;
-      setCourseAuthors([...courseAuthors]);
+  useEffect(() => {
+    if (editMode) {
+      const onCourseMap = new Map<string, boolean>();
+      courseAuthors.forEach((author) => {
+        onCourseMap.set(author.id, true);
+      });
+      setOnCourseMap(onCourseMap);
     }
+  }, [editMode, courseAuthors]);
+
+  const addCourseAuthor = (newAuthor: Author) => {
+    setOnCourseMap(onCourseMap.set(newAuthor.id, true));
+    setCourseAuthors([...courseAuthors, newAuthor]);
   };
 
-  const deleteCourseAuthor = (author: Author) => {
-    const authorToDelete = courseAuthors.find(
-      (courseAuthor) => author.id === courseAuthor.id
+  const deleteCourseAuthor = (deletedAuthor: Author) => {
+    setOnCourseMap(onCourseMap.set(deletedAuthor.id, false));
+    setCourseAuthors(
+      courseAuthors.filter((author) => author.id !== deletedAuthor.id)
     );
-    if (authorToDelete) {
-      authorToDelete.onCourse = false;
-      setCourseAuthors([...courseAuthors]);
-    }
   };
 
   const createAuthor = async (name: string) => {
@@ -52,41 +61,32 @@ const CreateCourseParameters = ({
       return;
     }
     const newAuthor = { name };
-    await axios.post('http://localhost:3000/authors/add', newAuthor);
-    dispatch(addAuthors(newAuthor));
-    setCourseAuthors([...courseAuthors, newAuthor as CourseAuthor]);
+    const addedAuthor = await apiService.addAuthor(newAuthor);
+    dispatch(addAuthors(addedAuthor.data.result));
   };
 
-  const allAuthorList = courseAuthors
+  const allAuthorList = allAuthors
+    .filter((author) => !onCourseMap.get(author.id))
     .map((author) => {
-      if (author.onCourse) {
-        return null;
-      }
       return (
         <div className='parameters__author-option' key={author.id}>
           <div className='parameters__author-name'>{author.name}</div>
           <Button text='Add author' onClick={() => addCourseAuthor(author)} />
         </div>
       );
-    })
-    .filter((author) => author !== null);
+    });
 
-  const courseAuthorList = courseAuthors
-    .map((author) => {
-      if (!author.onCourse) {
-        return null;
-      }
-      return (
-        <div className='parameters__author-option' key={author.id}>
-          <div className='parameters__author-name'>{author.name}</div>
-          <Button
-            text='Delete author'
-            onClick={() => deleteCourseAuthor(author)}
-          />
-        </div>
-      );
-    })
-    .filter((author) => author !== null);
+  const courseAuthorList = courseAuthors.map((author) => {
+    return (
+      <div className='parameters__author-option' key={author.id}>
+        <div className='parameters__author-name'>{author.name}</div>
+        <Button
+          text='Delete author'
+          onClick={() => deleteCourseAuthor(author)}
+        />
+      </div>
+    );
+  });
 
   return (
     <div className='parameters'>
@@ -112,7 +112,7 @@ const CreateCourseParameters = ({
             />
           </div>
         </div>
-        <CreateCourseDuration duration={duration} setDuration={setDuration} />
+        <EditCourseDuration duration={duration} setDuration={setDuration} />
       </div>
       <div className='parameters__right-block'>
         <div className='parameters__header'>Authors</div>
@@ -124,4 +124,4 @@ const CreateCourseParameters = ({
   );
 };
 
-export default CreateCourseParameters;
+export default EditCourseAuthors;

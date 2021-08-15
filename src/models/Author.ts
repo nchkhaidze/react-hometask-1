@@ -3,6 +3,10 @@ export interface Author {
   name: string;
 }
 
+export interface AuthorDTO {
+  name: string;
+}
+
 export interface CourseAuthor extends Author {
   onCourse: boolean;
 }

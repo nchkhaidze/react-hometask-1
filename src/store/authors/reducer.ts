@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Author } from '../../models/Author';
+import { fetchAuthors } from './thunk';
 
 interface AuthorsState {
   authors: Author[];
@@ -23,6 +24,12 @@ export const authorsSlice = createSlice({
     removeAuthor: (state, action) => {
       const id = action.payload;
       state.authors = state.authors.filter((authors) => authors.id !== id);
+    },
+  },
+  extraReducers: {
+    // @ts-ignore
+    [fetchAuthors.fulfilled]: (state, action) => {
+      state.authors = state.authors.concat(action.payload);
     },
   },
 });

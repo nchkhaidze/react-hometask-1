@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import './Header.css';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../store/user/reducer';
+import { userLogout } from '../../store/user/thunk';
 
 const Header = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(logout());
+    dispatch(userLogout());
   };
 
   return (

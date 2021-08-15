@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Author } from '../../../models/Author';
 import { Course } from '../../../models/Course';
+import { RootState } from '../../../store';
 import CourseCard from '../CourseCard/CourseCard';
 
 interface CourseListProps {
@@ -9,6 +11,7 @@ interface CourseListProps {
   filterValue: string;
   displayFilteredResults: boolean;
   deleteCourse: (id: string) => void;
+  userIsAdmin: boolean;
 }
 
 const CourseList = ({
@@ -17,8 +20,9 @@ const CourseList = ({
   filterValue,
   displayFilteredResults,
   deleteCourse,
+  userIsAdmin,
 }: CourseListProps) => {
-  const courseCards = courses.map((course) => {
+  const courseCards = courses?.map((course) => {
     const authorNames = course.authors.map((authorId) => {
       const author = authors.find((author) => author.id === authorId);
       return author?.name ?? '';
@@ -43,6 +47,7 @@ const CourseList = ({
           description={course.description}
           authorNames={authorNames}
           deleteCourse={deleteCourse}
+          userIsAdmin={userIsAdmin}
         />
       </div>
     );
