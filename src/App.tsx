@@ -9,15 +9,12 @@ import {
   Redirect,
 } from 'react-router-dom';
 import CourseForm from './components/Courses/CreateCourse/CourseForm/CourseForm';
-import dayjs from 'dayjs';
-import * as durationPlugin from 'dayjs/plugin/duration';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import CourseInfo from './components/Courses/CourseInfo/CourseInfo';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 function App() {
-  dayjs.extend(durationPlugin.default);
   return (
     <Router>
       <div className='wrapper'>

@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import React from 'react';
+import { pipeDuration } from '../../../../helpers/pipeDuration';
 
 interface EditCourseDurationProps {
   duration: number;
@@ -33,7 +33,7 @@ const EditCourseDuration = ({
           onChange={durationHandler}
         />
         <div className='parameters__total-duration'>
-          Duration: <b>{dayjs.duration(duration, 'minutes').format('H:mm')} </b>
+          Duration: <b>{pipeDuration(duration)} </b>
           hours
         </div>
       </div>
