@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import './Header.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../../store/user/thunk';
+import { RootState } from '../../store';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const currentUserName = useSelector((state: RootState) => state.users.name);
   const handleLogout = () => {
     dispatch(userLogout());
   };
@@ -19,7 +21,7 @@ const Header = () => {
         </Link>
       </div>
       <div className='header__content'>
-        <div className='header__username'>Niki</div>
+        <div className='header__username'>{currentUserName || 'Guest'}</div>
         <div className='header__logout'>
           <Link to='/login'>
             <Button text='Logout' onClick={() => handleLogout()} />
