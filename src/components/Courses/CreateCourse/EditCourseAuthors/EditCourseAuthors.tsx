@@ -115,10 +115,17 @@ const EditCourseAuthors = ({
         <EditCourseDuration duration={duration} setDuration={setDuration} />
       </div>
       <div className='parameters__right-block'>
-        <div className='parameters__header'>Authors</div>
-        {allAuthorList.length ? allAuthorList : 'Author list is empty'}
-        <div className='parameters__header'>Course authors</div>
-        {courseAuthorList.length ? courseAuthorList : 'Author list is empty'}
+        <div className='parameters__all-authors' data-testid='all-authors'>
+          <div className='parameters__header'>Authors</div>
+          {allAuthorList.length ? allAuthorList : 'Author list is empty'}
+        </div>
+        <div
+          className='parameters__course-authors'
+          data-testid='course-authors'
+        >
+          <div className='parameters__header'>Course authors</div>
+          {courseAuthorList.length ? courseAuthorList : 'Author list is empty'}
+        </div>
       </div>
     </div>
   );
