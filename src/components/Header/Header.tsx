@@ -4,11 +4,11 @@ import Button from '../Button/Button';
 import './Header.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../../store/user/thunk';
-import { RootState } from '../../store';
+import { userNameSelector } from '../../store/user/selectors';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const currentUserName = useSelector((state: RootState) => state.users.name);
+  const currentUserName = useSelector(userNameSelector);
   const handleLogout = () => {
     dispatch(userLogout());
   };

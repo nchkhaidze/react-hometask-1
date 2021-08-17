@@ -10,6 +10,7 @@ import EditCourseAuthors from '../EditCourseAuthors/EditCourseAuthors';
 import { RootState } from '../../../../store';
 import { useEffect } from 'react';
 import { addCourse, updateCourse } from '../../../../store/courses/thunk';
+import { allAuthorsSelector } from '../../../../store/authors/selectors';
 
 interface CourseFormProps {
   editMode: boolean;
@@ -30,7 +31,7 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const allAuthors = useSelector((state: RootState) => state.authors.authors);
+  const allAuthors = useSelector(allAuthorsSelector);
   const currentCourse = useSelector((state: RootState) =>
     state.courses.courses.find((course) => course.id === courseId)
   );

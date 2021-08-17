@@ -9,9 +9,9 @@ import * as redux from 'react-redux';
 
 describe('Header', () => {
   const store = configureStore({ reducer: () => {} });
-  const spy = jest.spyOn(redux, 'useSelector');
+  const useSelectorSpy = jest.spyOn(redux, 'useSelector');
   beforeEach(() => {
-    spy.mockReturnValue('name');
+    useSelectorSpy.mockReturnValue('name');
     render(
       <Provider store={store}>
         <BrowserRouter>

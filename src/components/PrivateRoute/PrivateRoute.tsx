@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { RootState } from '../../store';
+import { userRoleSelector } from '../../store/user/selectors';
 import Header from '../Header/Header';
 
 interface PrivateRouteProps {
@@ -10,7 +10,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ component, path }: PrivateRouteProps) => {
-  const userRole = useSelector((state: RootState) => state.users.role);
+  const userRole = useSelector(userRoleSelector);
   const Component = component;
   const result =
     userRole === 'admin' ? (

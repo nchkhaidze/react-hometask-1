@@ -9,7 +9,7 @@ import * as redux from 'react-redux';
 
 describe('Courses', () => {
   const store = configureStore({ reducer: () => {} });
-  const spy = jest.spyOn(redux, 'useSelector');
+  const useSelectorSpy = jest.spyOn(redux, 'useSelector');
   beforeEach(() => {
     render(
       <Provider store={store}>
@@ -21,12 +21,6 @@ describe('Courses', () => {
   });
 
   test('should render course-list', () => {
-    spy.mockReturnValue({
-      courses: {
-        courses: [],
-      },
-      authors: { authors: [] },
-    });
     expect(screen.getByTestId('course-list')).toBeInTheDocument();
   });
 });
