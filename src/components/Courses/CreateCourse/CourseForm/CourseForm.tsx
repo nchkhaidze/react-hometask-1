@@ -32,6 +32,7 @@ const CourseForm = ({ editMode }: CourseFormProps) => {
   const history = useHistory();
 
   const allAuthors = useSelector(allAuthorsSelector);
+  console.log(allAuthors);
   const currentCourse = useSelector((state: RootState) =>
     state.courses.courses.find((course) => course.id === courseId)
   );

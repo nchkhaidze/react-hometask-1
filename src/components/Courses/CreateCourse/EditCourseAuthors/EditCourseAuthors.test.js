@@ -1,32 +1,53 @@
 import React from 'react';
-import { render, screen, getByText } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import EditCourseAuthors from './EditCourseAuthors';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { mockAuthors } from '../../../../models/mocks';
+import { setupServer } from 'msw/node';
+import { rest } from 'msw';
+import authorsReducer from '../../../../store/authors/reducer';
+import coursesReducer from '../../../../store/courses/reducer';
+import usersReducer from '../../../../store/user/reducer';
+import CourseForm from '../CourseForm/CourseForm';
 
 describe('EditCourseAuthors', () => {
-  const store = configureStore({ reducer: () => {} });
+  const handlers = [
+    rest.post('http://localhost:3000/authors/add', (req, res, ctx) => {
+      return res(
+        ctx.json({ result: { name: 'Aasd', id: '227' } }),
+        ctx.delay(150)
+      );
+    }),
+  ];
 
-  beforeEach(() => {
+  const server = setupServer(...handlers);
+
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
+  test('should render authors', async () => {
+    const store = configureStore({
+      reducer: {
+        users: usersReducer,
+        courses: coursesReducer,
+        authors: authorsReducer,
+      },
+    });
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <EditCourseAuthors
-            allAuthors={mockAuthors}
-            courseAuthors={[]}
-            authorName='123123a'
-          />
+          <CourseForm editMode />
         </BrowserRouter>
       </Provider>
     );
-  });
-
-  test('should render authors list', () => {
-    const allAuthors = screen.getByTestId('all-authors');
-    expect(getByText(allAuthors, mockAuthors[0].name)).toBeInTheDocument();
-    expect(getByText(allAuthors, mockAuthors[1].name)).toBeInTheDocument();
+    fireEvent.change(screen.getByTestId('authorName'), {
+      target: { value: 'Aasd' },
+    });
+    fireEvent.click(screen.getByText('Create author'));
+    expect(await screen.findByText('Aasd')).toBeInTheDocument();
   });
 });

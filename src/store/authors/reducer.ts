@@ -20,6 +20,7 @@ export const authorsSlice = createSlice({
         return;
       }
       state.authors = state.authors.concat(action.payload);
+      console.log(state);
     },
     removeAuthor: (state, action) => {
       const id = action.payload;
