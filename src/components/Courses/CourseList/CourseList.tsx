@@ -1,8 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Author } from '../../../models/Author';
 import { Course } from '../../../models/Course';
-import { RootState } from '../../../store';
 import CourseCard from '../CourseCard/CourseCard';
 
 interface CourseListProps {
@@ -38,7 +36,7 @@ const CourseList = ({
       }
     }
     return (
-      <div className='courses__item' key={course.id}>
+      <div className='courses__item' key={course.id} data-testid='course-card'>
         <CourseCard
           id={course.id}
           title={course.title}
@@ -52,7 +50,11 @@ const CourseList = ({
       </div>
     );
   });
-  return <div className='courses__course-list'>{courseCards}</div>;
+  return (
+    <div className='courses__course-list' data-testid='course-list'>
+      {courseCards}
+    </div>
+  );
 };
 
 export default CourseList;

@@ -6,17 +6,18 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import CourseList from '../CourseList/CourseList';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
 import { removeCourse } from '../../../store/courses/thunk';
+import { allCoursesSelector } from '../../../store/courses/selectors';
+import { allAuthorsSelector } from '../../../store/authors/selectors';
+import { userRoleSelector } from '../../../store/user/selectors';
 
 const Courses = () => {
   const [searchValue, setSearchValue] = useState('');
   const [displayFilteredResults, setDisplayFilteredResults] = useState(false);
   const dispatch = useDispatch();
-  const courses = useSelector((state: RootState) => state.courses.courses);
-  const authors = useSelector((state: RootState) => state.authors.authors);
-  const userIsAdmin =
-    useSelector((state: RootState) => state.users.role) === 'admin';
+  const courses = useSelector(allCoursesSelector);
+  const authors = useSelector(allAuthorsSelector);
+  const userIsAdmin = useSelector(userRoleSelector) === 'admin';
 
   useEffect(() => {
     if (!searchValue) {
@@ -33,7 +34,7 @@ const Courses = () => {
   };
 
   return (
-    <div className='courses'>
+    <div className='courses' data-testid='courses'>
       <div className='courses__controls'>
         <Search
           searchValue={searchValue}

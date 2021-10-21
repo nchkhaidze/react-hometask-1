@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { pipeDuration } from '../../../helpers/pipeDuration';
 import Button from '../../Button/Button';
 import './CourseCard.css';
 
@@ -25,7 +25,6 @@ const CourseCard = ({
   deleteCourse,
   userIsAdmin,
 }: CourseCardProps) => {
-  const durationInHours = dayjs.duration(duration, 'minutes').format('H:mm');
   const history = useHistory();
   const buttonSection = userIsAdmin ? (
     <>
@@ -55,16 +54,26 @@ const CourseCard = ({
         <div className='course-card__title'>
           <h3>{title}</h3>
         </div>
-        <div className='course-card__description'>{description}</div>
+        <div className='course-card__description' data-testid='description'>
+          {description}
+        </div>
       </div>
       <div className='course-card__right-block'>
-        <div className='course-card__authors course-card__description-item'>
+        <div
+          className='course-card__authors course-card__description-item'
+          data-testid='authorNames'
+        >
           <b>Authors: {authorNames.join(', ')}</b>
         </div>
         <div className='course-card__duration course-card__description-item'>
-          <b>Duration: {`${durationInHours} hours`}</b>
+          <b data-testid='duration'>
+            Duration: {`${pipeDuration(duration)} hours`}
+          </b>
         </div>
-        <div className='course-card__created course-card__description-item'>
+        <div
+          className='course-card__created course-card__description-item'
+          data-testid='createdDate'
+        >
           <b>Created: {creationDate}</b>
         </div>
         <div className='course-card__button-container'>{buttonSection}</div>

@@ -8,6 +8,7 @@ interface InputProps {
   minlength?: number;
   required?: boolean;
   label?: string;
+  testId?: string;
 }
 
 const Input = ({
@@ -17,6 +18,7 @@ const Input = ({
   value,
   setValue,
   label,
+  testId,
 }: InputProps) => {
   return (
     <>
@@ -24,6 +26,7 @@ const Input = ({
         <label>{label ?? ''}</label>
       </div>
       <input
+        data-testid={testId}
         type='text'
         placeholder={placeholder}
         className='input'

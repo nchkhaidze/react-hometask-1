@@ -63,6 +63,7 @@ const EditCourseAuthors = ({
     const newAuthor = { name };
     const addedAuthor = await apiService.addAuthor(newAuthor);
     dispatch(addAuthors(addedAuthor.data.result));
+    console.log('create aturhor', addedAuthor.data.result);
   };
 
   const allAuthorList = allAuthors
@@ -101,6 +102,7 @@ const EditCourseAuthors = ({
             minlength={2}
             value={authorName}
             setValue={setAuthorName}
+            testId='authorName'
           />
           <small className='validation-warning' hidden={authorName.length >= 2}>
             Name must be at least 2 chars
@@ -115,10 +117,17 @@ const EditCourseAuthors = ({
         <EditCourseDuration duration={duration} setDuration={setDuration} />
       </div>
       <div className='parameters__right-block'>
-        <div className='parameters__header'>Authors</div>
-        {allAuthorList.length ? allAuthorList : 'Author list is empty'}
-        <div className='parameters__header'>Course authors</div>
-        {courseAuthorList.length ? courseAuthorList : 'Author list is empty'}
+        <div className='parameters__all-authors' data-testid='all-authors'>
+          <div className='parameters__header'>Authors</div>
+          {allAuthorList.length ? allAuthorList : 'Author list is empty'}
+        </div>
+        <div
+          className='parameters__course-authors'
+          data-testid='course-authors'
+        >
+          <div className='parameters__header'>Course authors</div>
+          {courseAuthorList.length ? courseAuthorList : 'Author list is empty'}
+        </div>
       </div>
     </div>
   );
